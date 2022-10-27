@@ -1,8 +1,8 @@
 services:
   rabbit:
     build:
-      context: .
-      dockerfile: Dockerfile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
+      context: ./dockerfile
+      dockerfile: rabbit-dockerfile
     ports:
       - ${RABBITMQ_PORT_APP_CONNECTION}:5672
       - ${RABBITMQ_PORT_DASHBOARD}:15672
@@ -12,6 +12,16 @@ services:
     volumes:
       - data:/var/lib/rabbitmq
       - logs:/var/log/rabbitmq
+
+  php-apache:
+    image: php:7.2-apache
+    ports:
+      - '8080:80'
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - rabbit
+
 volumes:
   data:
     external: true
