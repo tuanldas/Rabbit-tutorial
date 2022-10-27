@@ -1,0 +1,21 @@
+services:
+  rabbit:
+    build:
+      context: .
+      dockerfile: Dockerfile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
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    volumes:
+      - data:/var/lib/rabbitmq
+      - logs:/var/log/rabbitmq
+volumes:
+  data:
+    external:
+      name: ${VOLUME_RABBIT_DATA}
+  logs:
+    external:
+      name: ${VOLUME_RABBIT_LOG}
